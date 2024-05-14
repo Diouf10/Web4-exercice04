@@ -1,13 +1,16 @@
-const listePersonnage = require("../data");
+// va chercher les datas de base des personnages. -- BD
+const listePersonnage = require("../data.js");
 
+// avec la méthode index va chercher la liste de personnage est l'affiche en JSON.
 module.exports.index = (req, res) => {
-  const listePersonnage = require("../data.js");
+ //const listePersonnage = require("../data.js");
 
   res.json({ msg: listePersonnage, query: req.query });
 };
 
+// avec la méthode store va ajouter un personnage dans la liste de personnage.
 module.exports.store = (req, res) => {
-  const listePersonnage = require("../data.js");
+  //const listePersonnage = require("../data.js");
 
   const id = req.body.id
   const name = req.body.name;
@@ -28,7 +31,7 @@ module.exports.store = (req, res) => {
 module.exports.show = (req, res) => {
   const id = parseInt(req.params.id);
 
-  const listePersonnage = require("../data.js");
+ // const listePersonnage = require("../data.js");
 
   const personnageTrouve = listePersonnage.find(personnage => personnage.id === id);
 
@@ -37,17 +40,24 @@ module.exports.show = (req, res) => {
     res.status(200).json(personnageTrouve);
   } else {
     // Si le personnage n'est pas trouvé, renvoyer une réponse avec un code 404 (Not Found)
-    res.status(404).json({message: "Personnage non trouvé"});
+    res.status(404).json({message: "Personnage non trouvé."});
   };
+}
+
 
 // Correct ou non ? mdr
   module.exports.delete = (req, res) => {
+
+    // parse le id en int. (car en string)
     const id = parseInt(req.params.id);
 
-    const listePersonnage = require("../data.js");
+    // va chercher la liste de personnages.
+    //const listePersonnage = require("../data.js");
 
+    // trouvee le personnage avec le id
     const personnageTrouve = listePersonnage.find(personnage => personnage.id === id);
 
+    // si personnage trouve 
     if (personnageTrouve) {
       // Si le personnage est trouvé, renvoyer les détails du personnage avant de le supprimer
       res.status(200).json(personnageTrouve);
@@ -58,10 +68,30 @@ module.exports.show = (req, res) => {
     }
   }
 
-
+// modifie un personnage avec la méthode update.
   module.exports.update = (req, res) => {
-    res.status(405);
-    res.json({msg: "update", body: req.body});
+    // parse le id en int. (car en string)
+    const id = parseInt(req.params.id);
+
+    const name = req.body.name;
+    const realname = req.body.realname;
+
+    // trouvee le personnage avec le id
+    const personnageTrouve = listePersonnage.find(personnage => personnage.id === id);
+
+    if (personnageTrouve) {
+      // Si le personnage est trouvé, renvoyer les détails du personnage avant de le supprimer
+        personnageTrouve.name = name;
+        personnageTrouve.realname = realname;
+        res.status(200).json(personnageTrouve);
+    } else {
+      // Si le personnage n'est pas trouvé, renvoyer une réponse avec un code 404 (Not Found)
+      res.status(404).json({message: "Personnage non trouvé pour suppression"});
+    }
+
+
+   // res.status(405);
+   // res.json({msg: "update", body: req.body});
 
   };
-}
+

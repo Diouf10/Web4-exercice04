@@ -1,14 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <title>Express</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/css/app.css?v=1.0.0" />
+        <script src="/js/app.js?v=1.0.0" defer></script>
+    </head>
 
-<head>
-    <meta charset="utf-8">
-    <title>Express</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-
-<body>
-    <h1>Salut <%= nom %>!</h1>
-</body>
-
+    <body>
+        <div class="container">
+            <h1>Liste des personnages</h1>
+            <ul>
+                <% personnages.forEach(personnage => { %>
+                <li class="card">
+                    <div class="card-content">
+                        <strong>Nom :</strong> <%= personnage.name %><br />
+                        <strong>Nom réel :</strong> <%= personnage.realname
+                        %><br />
+                        <strong>ID :</strong> <%= personnage.id %>
+                    </div>
+                </li>
+                <% }); %>
+            </ul>
+        </div>
+    </body>
 </html>

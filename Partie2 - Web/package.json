@@ -5,7 +5,12 @@
 	"main": "app.js",
 	"author": "Jayci Plamondon et Mohammad Wagan Diouf****",
 	"scripts": {
-		"start": "nodemon app.js"
+		"start": "nodemon app.js",
+		"build": "npm run build:js && npm run build:css",
+ 		"build:js": "esbuild resources/js/app.js --bundle --outfile=public/js/app.js",
+ 		"build:css": "esbuild resources/css/app.css --bundle --outfile=public/css/app.css",
+ 		"build:js-watch": "npm run build:js -- --watch",
+ 		"build:css-watch": "npm run build:css -- --watch"
 	},
 	"dependencies": {
 		"dotenv": "^16.4.5",
@@ -14,6 +19,8 @@
 		"helmet": "^7.1.0"
 	},
 	"devDependencies": {
+		"axios": "^1.6.8",
+		"esbuild": "^0.21.2",
 		"nodemon": "^3.1.0"
 	}
 }

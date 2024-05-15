@@ -12,18 +12,19 @@ module.exports.index = (req, res) => {
 module.exports.store = (req, res) => {
   //const listePersonnage = require("../data.js");
 
-  const id = req.body.id
+  const id = listePersonnage[listePersonnage.length - 1].id + 1
   const name = req.body.name;
-  const realname = req.body.realname;
+  const realname = req.body.realname || '';
 
   let personnageAjouter = {id, name, realname}
 
-  if (listePersonnage.find(personnage => personnage.id == id)) {
-    res.status(505).json({mgs: 'HEY DEJA CRÉER WTF'})
+  if (name === undefined || name === "") {
+    res.status(505).json({mgs: 'Le nom est vide.'})
   }
 
-  listePersonnage.push({ id: id, name: name,   realname: realname});
 
+  listePersonnage.push({ id: id, name: name, realname: realname});
+  console.log("Personnage créé");
   res.status(202).json(listePersonnage[listePersonnage.length - 1]);
 };
 
@@ -45,53 +46,57 @@ module.exports.show = (req, res) => {
 }
 
 
-// Correct ou non ? mdr
   module.exports.delete = (req, res) => {
 
-    // parse le id en int. (car en string)
-    const id = parseInt(req.params.id);
+  // parse le id en int. (car en string)
+  const id = parseInt(req.params.id);
 
-    // va chercher la liste de personnages.
-    //const listePersonnage = require("../data.js");
+  // va chercher la liste de personnages.
+  //const listePersonnage = require("../data.js");
 
-    // trouvee le personnage avec le id
-    const personnageTrouve = listePersonnage.find(personnage => personnage.id === id);
+  // trouvee l'index avec le id
+  index = listePersonnage.findIndex(personnage => personnage.id === id);
 
-    // si personnage trouve 
-    if (personnageTrouve) {
-      // Si le personnage est trouvé, renvoyer les détails du personnage avant de le supprimer
-      res.status(200).json(personnageTrouve);
-      listePersonnage.splice(personnageTrouve.id, 1);
-    } else {
+  // si personnage trouve 
+  if (index !== -1) {
+    // Si le personnage est trouvé, renvoyer les détails du personnage avant de le supprimer
+    const deletedPersonnage = listePersonnage.splice(index, 1)[0];
+    res.status(200).json(deletedPersonnage); // Retourne le personnage supprimé
+  } else {
       // Si le personnage n'est pas trouvé, renvoyer une réponse avec un code 404 (Not Found)
-      res.status(404).json({message: "Personnage non trouvé pour suppression"});
-    }
+      res.status(404).json({ message: "Personnage not found for deletion" });
   }
+}
 
 // modifie un personnage avec la méthode update.
-  module.exports.update = (req, res) => {
-    // parse le id en int. (car en string)
-    const id = parseInt(req.params.id);
 
-    const name = req.body.name;
-    const realname = req.body.realname;
+// modifie un personnage avec la méthode update.
+module.exports.update = (req, res) => {
+  // parse le id en int. (car en string)
+  var id = parseInt(req.params.id);
 
-    // trouvee le personnage avec le id
-    const personnageTrouve = listePersonnage.find(personnage => personnage.id === id);
+  const name = req.body.name;
+  const realname = req.body.realname;
+  
+  // trouvee le personnage avec le id
+  const personnageTrouve = listePersonnage.find(personnage => personnage.id === id);
 
-    if (personnageTrouve) {
-      // Si le personnage est trouvé, renvoyer les détails du personnage avant de le supprimer
-        personnageTrouve.name = name;
-        personnageTrouve.realname = realname;
-        res.status(200).json(personnageTrouve);
-    } else {
-      // Si le personnage n'est pas trouvé, renvoyer une réponse avec un code 404 (Not Found)
-      res.status(404).json({message: "Personnage non trouvé pour suppression"});
+  if (personnageTrouve) {
+    // Si le personnage est trouvé, renvoyer les détails du personnage avant de le supprimer
+    if ((name === undefined || name === "") && (realname === undefined || realname === "")) {
+      res.status(505).json({mgs: 'Le nom et nom réel sont vide.'})
     }
 
+    personnageTrouve.name = name !== undefined ? name : personnageTrouve.name;
+    personnageTrouve.realname = realname !== undefined ? realname : personnageTrouve.realname;
 
-   // res.status(405);
-   // res.json({msg: "update", body: req.body});
-
-  };
+    res.status(200).json(personnageTrouve);
+  } else {
+    // Si le personnage n'est pas trouvé, le créer
+    const id = listePersonnage[listePersonnage.length - 1].id + 1
+    listePersonnage.push({ id: id, name: name, realname: realname});
+    console.log("Personnage créé");
+    res.status(202).json(listePersonnage[listePersonnage.length - 1]);    
+  }
+};
 

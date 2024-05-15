@@ -6,12 +6,13 @@
     "author": "Jayci Plamondon et Mouhammad Wagan Diouf",
     "type": "module",
     "scripts": {
-    "start": "nodemon app.js"
+        "start": "nodemon app.js"
     },
     "dependencies": {
         "@apollo/server": "^4.10.4",
         "dotenv": "^16.4.5",
-        "graphql": "^16.8.1"
+        "graphql": "^16.8.1",
+        "mariadb": "^3.3.0"
     },
     "devDependencies": {
         "nodemon": "^3.1.0"

@@ -1,0 +1,9 @@
+services:
+  db:
+    container_name: local-db
+    image: mariadb:11.3
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_DATABASE}
+    ports:
+      - 3306:3306

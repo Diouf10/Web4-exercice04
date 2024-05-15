@@ -1,0 +1,19 @@
+{
+    "name": "cstjean-news",
+    "version": "1.0.0",
+    "description": "Test GraphQL",
+    "main": "app.js",
+    "author": "Jayci Plamondon et Mouhammad Wagan Diouf",
+    "type": "module",
+    "scripts": {
+    "start": "nodemon app.js"
+    },
+    "dependencies": {
+        "@apollo/server": "^4.10.4",
+        "dotenv": "^16.4.5",
+        "graphql": "^16.8.1"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.0"
+    }
+}

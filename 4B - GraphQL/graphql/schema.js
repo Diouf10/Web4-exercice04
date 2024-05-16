@@ -7,13 +7,13 @@ const typeDefs = `
     """
     Retourne la liste des liens d'intérêts.
     """
-    feed: [Link!]!
+    feed: [Produit!]!
   }
 
   """
   Un lien d'intérêt.
   """
-  type Link {
+  type Produit {
     id: ID!
     description: String!
     url: String!
@@ -23,7 +23,7 @@ const typeDefs = `
     """
     Pour ajouter des liens d'intérêts.
     """
-    post(url: String!, description: String!): Link!
+    post(url: String!, description: String!): Produit!
   }
 `;
 export { typeDefs };

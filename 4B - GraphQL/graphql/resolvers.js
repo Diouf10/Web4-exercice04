@@ -1,12 +1,12 @@
-import { newsResolver } from "./resolvers/news.js";
+import { produitsResolver } from "./resolvers/produits.js";
 
 const resolvers = {
     Query: {
-        info: () => "CSTJEAN NEWS",
-        feed: newsResolver.index,
+        info: () => "PRODUITS PERSONNAGE",
+        feed: produitsResolver.index,
     },
     Mutation: {
-        post: newsResolver.post,
+        post: produitsResolver.post,
     },
 };
 export { resolvers };

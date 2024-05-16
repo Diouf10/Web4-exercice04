@@ -10,7 +10,6 @@ class Produit {
     }
 
     async save() {
-        // TODO Update ...
         const res = await query("INSERT INTO produits value (?, ?, ?)", [
         this.id,
         this.url,
